@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing:border-box;
+    list-style: none;
+}
+body{
+    background-color: rgb(35, 96, 75);
+    height:100vh;
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.quiz-section{
+    background-color: white;
+    box-shadow:0px 0px 8px 1px rgb(9, 123, 135);
+    /* padding:20px; */
+    border-radius: 10px;
+    width:auto;
+}
+hr{
+    width:100%;
+}
+
+h2{
+    padding:20px 20px 0 20px; 
+}
+#score{
+    font-family: cursive;
+    font-size: 20px;
+    margin:0 0 10px 20px;
+}
+ul li{
+    padding:10px 20px;
+    border:1px solid rgb(112, 105, 105);
+    width:200px;
+    margin:20px;
+    border-radius:30px;
+}
+button{
+    margin:20px;
+    padding:5px;
+    border-radius:20px;
+    width:100px;
+    border: none;
+    font-weight: 700;
+    height:30px;
+    color:white;
+    background-color: rgb(45, 123, 239);
+}
+.boxmain{
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+h3{
+    font-family: cursive;
+    font-size:30px;
+    color:aqua;
+    margin: 30px;
+}
+#show{
+    font-family: sans-serif;
+    font-size: 
+    20px;
+    color:red;
+    margin-bottom: 30px;;
+    /* margin-left: 30px; */
+    /* margin: 30px; */
+}
+    </style>
+</head>
+
+<body>
+    <div class="quiz-section">
+        
+            <h2 id="question1" class="quest
+                ion">Quiz question</h2>
+            <span id="scoremain">score:0</span>
+            <hr>
+            <ul>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="a">
+                    <label for="a" id="option_1">quize option</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="b">
+                    <label for="b" id="option_2">quize option</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="c">
+                    <label for="c" id="option_3">quize option</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="d">
+                    <label for="d" id="option_4">quize option</label>
+                </li>
+
+            </ul>
+            <hr>
+            <div class="btn">
+                <button id="submit" onclick="submit1()">submit</button>
+            </div>
+        
+    </div>
+
+</body>
+
+<script >
+    const quizData=[
+    {
+        question:"What does HTML stand for",
+        options:[
+            "Hyper Transfer Markup Language",
+            "Hypertext Machine Language",
+            "Hypertext Markup Language",
+            "Hyperlink and Text Markup Language"    
+        ],
+        correct:2,
+    },
+    {
+        question:"Which css property used to control the spacing between elements",
+        options:[
+            "margin","padding","spacing","border-spacing"
+        ]
+        ,correct:1
+    },
+    {
+        question:"what is the javascript function used to select an HTML element by its id?"
+        ,options:[
+            "getElementById",
+            "document.query",
+            "selectElement",
+            "findElementById"
+        ],correct:0
+    },
+    {
+        question:"How much type you can add css in your HTML page?",
+        options:[
+            "3","2","4","1"
+        ],
+        correct:0
+    },
+    {
+        question:"Who is C++ developer?",
+        options:[
+            "George Bool",
+            "Dennis Ritchie",
+            "Chalers Babbage",
+            "Bjarne Stroustrup"
+        ],
+        correct:3
+    }
+    
+];
+let optionsRadio=document.querySelectorAll(".answer");
+let subBtn=document.querySelector("#submit");
+
+let queh2=document.querySelector("h2");
+
+let option_1=document.getElementById("option_1");
+let option_2=document.getElementById("option_2");
+let option_3=document.getElementById("option_3");
+let option_4=document.getElementById("option_4");
+let section1=document.querySelector(".quiz-section");
+let score=0;
+let currentquiz=0;
+let scoremain=document.getElementById("scoremain");
+
+function loadQuiz(){
+    let quiz=quizData[currentquiz];
+    queh2.innerText=`${currentquiz+1}: ${quiz.question}`;
+    option_1.innerText=quiz.options[0];
+    option_2.innerText=quiz.options[1];
+    option_3.innerText=quiz.options[2];
+    option_4.innerText=quiz.options[3];
+}
+loadQuiz();
+
+function getoption(){
+    for(let i=0;i<=optionsRadio.length;i++){
+        if(optionsRadio[i].checked){
+            return i;
+        }
+    }
+}
+function clearOption(){
+    for(let j=0;j<=optionsRadio.length;j++){
+        if(optionsRadio[j].checked){
+            return optionsRadio[j].checked=false;
+        }
+    }
+}
+
+
+function next1(){
+    currentquiz++;
+if(currentquiz<quizData.length){
+loadQuiz();
+
+}
+else{
+section1.innerHTML=`<div class="boxmain">
+<h3>Contratulation</h3>
+<span id="show">Your score is: ${score}/5</span>
+</div>`
+
+}
+
+}
+function check1(){
+    let opt=getoption();
+    let rightans=quizData[currentquiz].correct;
+    if(opt===rightans){
+        score++;
+        scoremain.innerText=`score: ${score}`;
+        
+    }
+
+}
+
+function submit1(){
+console.log(getoption());
+
+check1();
+next1();
+clearOption();
+}
+</script>
+
+</html>
